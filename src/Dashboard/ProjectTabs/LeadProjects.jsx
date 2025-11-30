@@ -41,7 +41,7 @@ import {
  */
 function LeadProjects() {
   const { user } = useContext(AuthContext);
-
+  const API_BASE = import.meta.env.VITE_API_BASE_URL
   const [loading, setLoading] = useState(true);
   const [leadProjects, setLeadProjects] = useState([]);
   const [expandedProject, setExpandedProject] = useState(null);
@@ -59,7 +59,7 @@ function LeadProjects() {
     const fetchLeadProjects = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("http://127.0.0.1:8000/api/projectleads/", {
+        const res = await axios.get(`${API_BASE}/api/projectleads/`, {
           params: { email: user.email },
         });
         setLeadProjects(res.data || []);
@@ -83,7 +83,7 @@ function LeadProjects() {
     setRequestLoading(true);
     try {
       const res = await axios.get(
-        "http://127.0.0.1:8000/api/projectrequestsdisplay/",
+        `${API_BASE}/api/projectrequestsdisplay/`,
         {
           params: { email: user.email, projectname },
         }
@@ -106,7 +106,7 @@ function LeadProjects() {
     setMembersLoading(true);
     try {
       const res = await axios.get(
-        "http://127.0.0.1:8000/api/projectmembersdisplay/",
+        `${API_BASE}/api/projectmembersdisplay/`,
         {
           params: { email: user.email, projectname },
         }
@@ -148,14 +148,14 @@ function LeadProjects() {
   const handleAccept = async (email, projectname, id, message) => {
     setRequestLoading(true);
     try {
-      await axios.post("http://127.0.0.1:8000/api/projectmembers/", {
+      await axios.post(`${API_BASE}/api/projectmembers/`, {
         owner: user.email,
         email,
         projectname,
         message,
       });
 
-      await axios.delete(`http://127.0.0.1:8000/api/projectrequests/${id}/`);
+      await axios.delete(`${API_BASE}/api/projectrequests/${id}/`);
       fetchRequests(projectname);
       fetchMembers(projectname);
     } catch (err) {
@@ -176,14 +176,14 @@ function LeadProjects() {
   const handleReject = async (email, projectname, id, message) => {
     setRequestLoading(true);
     try {
-      await axios.post("http://127.0.0.1:8000/api/projectreject/", {
+      await axios.post(`${API_BASE}/api/projectreject/`, {
         owner: user.email,
         email,
         projectname,
         message,
       });
 
-      await axios.delete(`http://127.0.0.1:8000/api/projectrequests/${id}/`);
+      await axios.delete(`${API_BASE}/api/projectrequests/${id}/`);
       fetchRequests(projectname);
     } catch (err) {
       console.error("Error rejecting request:", err);

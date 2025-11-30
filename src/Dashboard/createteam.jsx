@@ -35,6 +35,7 @@ import ErrorToast from "../toasts/ErrorToast.jsx";
 function CreateTeam() {
   /** --------------------------- State Management --------------------------- */
   const { triggerRefresh } = useDashboard();
+  const API_BASE = import.meta.env.VITE_API_BASE_URL
   const [refresh, setRefresh] = useState(false);
   const [projectName, setProjectName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
@@ -79,7 +80,7 @@ function CreateTeam() {
     };
 
     try {
-      await axios.post("http://127.0.0.1:8000/api/projectleads/", project);
+      await axios.post(`${API_BASE}/api/projectleads/`, project);
       console.log("Project Created Successfully");
       setCreated(true);
       triggerRefresh();

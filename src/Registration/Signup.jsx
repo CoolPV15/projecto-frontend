@@ -41,6 +41,7 @@ function RightPane() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [created, setCreated] = useState(false);
+  const API_BASE = import.meta.env.VITE_API_BASE_URL
 
   /** ------------------------------------------------------------------------
    * @function postData
@@ -73,7 +74,7 @@ function RightPane() {
     };
 
     try {
-      await axios.post("http://127.0.0.1:8000/api/accounts/", body);
+      await axios.post(`${API_BASE}/api/accounts/`, body);
       setError(false);
       setFname("");
       setLname("");

@@ -26,6 +26,7 @@ import { AuthContext } from "../../context/AuthProvider.jsx";
  */
 function JoinedProjects() {
   const { user } = useContext(AuthContext);
+  const API_BASE = import.meta.env.VITE_API_BASE_URL
 
   const [joinedProjects, setJoinedProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -45,7 +46,7 @@ function JoinedProjects() {
     const fetchProjects = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/joinedprojects/",
+          `${API_BASE}/api/joinedprojects/`,
           {
             params: { email: user.email },
           }
@@ -74,7 +75,7 @@ function JoinedProjects() {
 
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/projectmembersdisplay/",
+        `${API_BASE}/api/projectmembersdisplay/`,
         {
           params: {
             email: project.owner_email,
