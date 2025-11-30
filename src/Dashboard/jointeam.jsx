@@ -19,6 +19,7 @@
 
 import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
+import axiosInstance from "../Interceptors/axiosInstance";
 import { AuthContext } from "../context/AuthProvider.jsx";
 import SuccessToast from "../toasts/SuccessToast.jsx";
 import ErrorToast from "../toasts/ErrorToast.jsx";
@@ -44,7 +45,6 @@ import {
 function JoinTeam() {
   /** --------------------------- State Management --------------------------- */
   const { user } = useContext(AuthContext);
-  const API_BASE = import.meta.env.VITE_API_BASE_URL
   const { triggerRefresh } = useDashboard();
   const [refresh, setRefresh] = useState(false);
   const [projects, setProjects] = useState([]);
@@ -65,7 +65,7 @@ function JoinTeam() {
 
     const fetchProjects = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/api/projects/`, {
+        const response = await axiosInstance.get("projects/", {
           params: { email: user.email, frontend: user.frontend, backend: user.backend },
         });
         setProjects(response.data || []);
@@ -115,7 +115,7 @@ function JoinTeam() {
     };
 
     try {
-      await axios.post(`${API_BASE}/api/projectrequests/`, new_request);
+      await axiosInstance.post("projectrequests/", new_request);
       setSuccess("Request sent successfully!");
       triggerRefresh();
       setRefresh((prev) => !prev);

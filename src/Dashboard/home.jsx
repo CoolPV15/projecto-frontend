@@ -45,7 +45,6 @@ function Home() {
   /** --------------------------- Context and Navigation --------------------------- */
   // Accessing authentication data and user login function from AuthContext.
   const { user, loginUser } = useContext(AuthContext);
-  const API_BASE = import.meta.env.VITE_API_BASE_URL
 
   // Using Dashboard context to check for refresh to update the counts
   const { refreshDashboard } = useDashboard();
@@ -72,8 +71,8 @@ function Home() {
     const token = localStorage.getItem("access_token");
 
     if (!token) {
-      localStorage.setItem("islogged", false);
       navigate("/");
+      localStorage.setItem("islogged", false);
     } else {
       (async () => {
         try {
@@ -110,11 +109,11 @@ function Home() {
    *              tabs after receiving the counts from the backend.
    * ------------------------------------------------------------------------- */
   useEffect(() => {
-    if(!user) return;
+    if(!user || !user.email) return;
 
     const getCounts = async () => {
       try{
-        const response = await axios.get(`${API_BASE}/api/projectcount/`,{
+        const response = await axiosInstance.get("projectcount/",{
           params: {email:user.email}
         });
         setCounts({createdprojects: response.data["createdprojects"], 

@@ -15,6 +15,7 @@
 
 import { Clock, Mail, User } from "lucide-react";
 import axios from "axios";
+import axiosInstance from "../../Interceptors/axiosInstance";
 import { AuthContext } from "../../context/AuthProvider.jsx";
 import { useContext, useEffect, useState } from "react";
 
@@ -43,8 +44,8 @@ function PendingProjects() {
       try {
         setLoading(true);
 
-        const response = await axios.get(
-          `${API_BASE}/api/pendingprojects/`,
+        const response = await axiosInstance.get(
+          "pendingprojects/",
           {
             params: { email: user.email },
           }

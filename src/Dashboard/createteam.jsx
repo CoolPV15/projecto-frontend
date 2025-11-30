@@ -9,6 +9,7 @@
 
 import React, { useState, useContext } from "react";
 import axios from "axios";
+import axiosInstance from "../Interceptors/axiosInstance";
 import { AuthContext } from "../context/AuthProvider.jsx";
 import SuccessToast from "../toasts/SuccessToast.jsx";
 import { useDashboard } from "../context/DashboardContext.jsx";
@@ -35,7 +36,6 @@ import ErrorToast from "../toasts/ErrorToast.jsx";
 function CreateTeam() {
   /** --------------------------- State Management --------------------------- */
   const { triggerRefresh } = useDashboard();
-  const API_BASE = import.meta.env.VITE_API_BASE_URL
   const [refresh, setRefresh] = useState(false);
   const [projectName, setProjectName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
@@ -80,7 +80,7 @@ function CreateTeam() {
     };
 
     try {
-      await axios.post(`${API_BASE}/api/projectleads/`, project);
+      await axiosInstance.post("projectleads/", project);
       console.log("Project Created Successfully");
       setCreated(true);
       triggerRefresh();

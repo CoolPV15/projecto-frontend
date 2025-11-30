@@ -14,6 +14,7 @@
 
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import axiosInstance from "../../Interceptors/axiosInstance";
 import { AuthContext } from "../../context/AuthProvider.jsx";
 import {
   Users,
@@ -41,7 +42,7 @@ import {
  */
 function LeadProjects() {
   const { user } = useContext(AuthContext);
-  const API_BASE = import.meta.env.VITE_API_BASE_URL
+
   const [loading, setLoading] = useState(true);
   const [leadProjects, setLeadProjects] = useState([]);
   const [expandedProject, setExpandedProject] = useState(null);
@@ -59,7 +60,7 @@ function LeadProjects() {
     const fetchLeadProjects = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${API_BASE}/api/projectleads/`, {
+        const res = await axiosInstance.get("projectleads/", {
           params: { email: user.email },
         });
         setLeadProjects(res.data || []);
@@ -82,8 +83,8 @@ function LeadProjects() {
   const fetchRequests = async (projectname) => {
     setRequestLoading(true);
     try {
-      const res = await axios.get(
-        `${API_BASE}/api/projectrequestsdisplay/`,
+      const res = await axiosInstance.get(
+        "projectrequestsdisplay/",
         {
           params: { email: user.email, projectname },
         }
@@ -105,8 +106,8 @@ function LeadProjects() {
   const fetchMembers = async (projectname) => {
     setMembersLoading(true);
     try {
-      const res = await axios.get(
-        `${API_BASE}/api/projectmembersdisplay/`,
+      const res = await axiosInstance.get(
+        "projectmembersdisplay/",
         {
           params: { email: user.email, projectname },
         }
@@ -148,14 +149,14 @@ function LeadProjects() {
   const handleAccept = async (email, projectname, id, message) => {
     setRequestLoading(true);
     try {
-      await axios.post(`${API_BASE}/api/projectmembers/`, {
+      await axiosInstance.post("projectmembers/", {
         owner: user.email,
         email,
         projectname,
         message,
       });
 
-      await axios.delete(`${API_BASE}/api/projectrequests/${id}/`);
+      await axiosInstance.delete(`projectrequests/${id}/`);
       fetchRequests(projectname);
       fetchMembers(projectname);
     } catch (err) {
@@ -176,14 +177,14 @@ function LeadProjects() {
   const handleReject = async (email, projectname, id, message) => {
     setRequestLoading(true);
     try {
-      await axios.post(`${API_BASE}/api/projectreject/`, {
+      await axiosInstance.post("projectreject/", {
         owner: user.email,
         email,
         projectname,
         message,
       });
 
-      await axios.delete(`${API_BASE}/api/projectrequests/${id}/`);
+      await axiosInstance.delete(`projectrequests/${id}/`);
       fetchRequests(projectname);
     } catch (err) {
       console.error("Error rejecting request:", err);

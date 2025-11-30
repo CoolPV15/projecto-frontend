@@ -34,7 +34,8 @@ function RightPane() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { setAuthTokens } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
+
 
 /** ------------------------------------------------------------------------ 
  * @function useEffect 
@@ -78,7 +79,12 @@ function RightPane() {
       localStorage.setItem("islogged", "true");
 
       axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
-      setAuthTokens(data);
+      loginUser({
+        user: { email: username }, 
+        access: data.access,
+        refresh: data.refresh
+      });
+
       navigate("home");
     } catch (err) {
       setError("Invalid Credentials");
@@ -134,6 +140,7 @@ function RightPane() {
               onChange={(e) => setUsername(e.target.value)}
               required
               className="peer w-full pl-10 pr-3 py-3 bg-white/60 border border-gray-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-300 rounded-xl outline-none transition"
+              autoComplete="on"
             />
             <label
               htmlFor="email"
