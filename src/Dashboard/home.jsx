@@ -76,7 +76,7 @@ function Home() {
     } else {
       (async () => {
         try {
-          const { data } = await axiosInstance.get("accounts/home/");
+          const { data } = await axiosInstance.get("api/accounts/home/");
           loginUser(data);
         } catch (error) {
           console.log("Not Authorized");
@@ -113,7 +113,7 @@ function Home() {
 
     const getCounts = async () => {
       try{
-        const response = await axiosInstance.get("projectcount/",{
+        const response = await axiosInstance.get("api/projectcount/",{
           params: {email:user.email}
         });
         setCounts({createdprojects: response.data["createdprojects"], 

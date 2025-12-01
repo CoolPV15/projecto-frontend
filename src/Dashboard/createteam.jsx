@@ -80,7 +80,7 @@ function CreateTeam() {
     };
 
     try {
-      await axiosInstance.post("projectleads/", project);
+      await axiosInstance.post("api/projectleads/", project);
       console.log("Project Created Successfully");
       setCreated(true);
       triggerRefresh();

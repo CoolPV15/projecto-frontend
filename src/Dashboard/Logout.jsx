@@ -44,7 +44,7 @@ function Logout() {
 
         try {
             // Calling the logout API only if refresh token exists
-            await axiosInstance.post("accounts/logout/", { refresh_token });
+            await axiosInstance.post("api/accounts/logout/", { refresh_token });
 
             // Clearing the tokens after successful logout
             localStorage.removeItem("access_token");

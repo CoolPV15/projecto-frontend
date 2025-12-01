@@ -74,7 +74,7 @@ function RightPane() {
     };
 
     try {
-      await axios.post(`${API_BASE}/accounts/`, body);
+      await axios.post(`${API_BASE}/api/accounts/`, body);
       setError(false);
       setFname("");
       setLname("");

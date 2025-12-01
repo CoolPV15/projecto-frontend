@@ -46,7 +46,7 @@ function JoinedProjects() {
     const fetchProjects = async () => {
       try {
         const response = await axiosInstance.get(
-          "joinedprojects/",
+          "api/joinedprojects/",
           {
             params: { email: user.email },
           }
@@ -75,7 +75,7 @@ function JoinedProjects() {
 
     try {
       const response = await axiosInstance.get(
-        "projectmembersdisplay/",
+        "api/projectmembersdisplay/",
         {
           params: {
             email: project.owner_email,

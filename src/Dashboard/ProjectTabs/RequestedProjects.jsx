@@ -45,7 +45,7 @@ function PendingProjects() {
         setLoading(true);
 
         const response = await axiosInstance.get(
-          "pendingprojects/",
+          "api/pendingprojects/",
           {
             params: { email: user.email },
           }

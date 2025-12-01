@@ -70,7 +70,7 @@ function RightPane() {
  *  ------------------------------------------------------------------------ */
   const authenticateData = async () => {
     try {
-      const { data } = await axiosInstance.post("token/", {
+      const { data } = await axiosInstance.post("api/token/", {
         email: username,
         password: password,
       });

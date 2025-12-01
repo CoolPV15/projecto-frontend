@@ -65,7 +65,7 @@ function JoinTeam() {
 
     const fetchProjects = async () => {
       try {
-        const response = await axiosInstance.get("projects/", {
+        const response = await axiosInstance.get("api/projects/", {
           params: { email: user.email, frontend: user.frontend, backend: user.backend },
         });
         setProjects(response.data || []);
@@ -115,7 +115,7 @@ function JoinTeam() {
     };
 
     try {
-      await axiosInstance.post("projectrequests/", new_request);
+      await axiosInstance.post("api/projectrequests/", new_request);
       setSuccess("Request sent successfully!");
       triggerRefresh();
       setRefresh((prev) => !prev);
